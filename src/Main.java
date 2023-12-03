@@ -1,15 +1,13 @@
 
-import jdk.jshell.execution.Util;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.ArrayList;
 
 
-public class Main {
+
+public class Main{
     public static boolean adminLogin(String login, String pwd) {
         // Connecting to database
         String url = "jdbc:mysql://localhost:3306/itapp";
@@ -116,7 +114,7 @@ public class Main {
         panel.setLayout(null);
 
         JLabel seConnecter = new JLabel("Veuillez se connecter");
-        seConnecter.setBounds(195, 50, 250, 25);
+        seConnecter.setBounds(204, 50, 250, 25);
         Font logoFontConn = new Font("Times New Roman", Font.BOLD, 28);
         seConnecter.setFont(logoFontConn);
         seConnecter.setForeground(Color.red);
@@ -175,7 +173,7 @@ public class Main {
                     // Assuming admin id i always 1
                     utilisateur.id = 1;
                     // we close the login frame and open a new frame of "admin"
-                    AdminInterface adminInt = new AdminInterface();
+                    AdminInterface adminInt = new AdminInterface(utilisateur.id);
                     loginPage.setVisible(false);
                     adminInt.setVisible(true);
                 } else if (vendeurLogin(utilisateur.getLogin(), utilisateur.getPassword())) {
