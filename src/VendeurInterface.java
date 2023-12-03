@@ -15,7 +15,6 @@ public class VendeurInterface extends JFrame {
         this.setVisible(false);
         this.setBounds(460, 200, 700, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
@@ -109,6 +108,13 @@ public class VendeurInterface extends JFrame {
                         preparedStatement1.setInt(2, idProduit);
                         preparedStatement1.executeUpdate();
                         preparedStatement1.close();
+
+                        // here i will change the frame to
+                        // if the user wants to add a new "vente" or no
+                        // if he chooses no, we will sign out and go to login page
+                        DeclarationSuccess success = new DeclarationSuccess(id);
+                        setVisible(false);
+                        success.setVisible(true);
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
