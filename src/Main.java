@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 
-
-public class Main{
+public class Main {
     public static boolean adminLogin(String login, String pwd) {
         // Connecting to database
         String url = "jdbc:mysql://localhost:3306/itapp";
@@ -18,7 +17,7 @@ public class Main{
             // Establishing the connection
             Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
             // Fetching data from a table
-            String users = "SELECT login, mdp FROM admin";
+            String users = "SELECT usernameAD, passwordAD FROM admin";
             PreparedStatement preparedStatement = connection.prepareStatement(users);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
