@@ -1,3 +1,5 @@
+// Ce class est pour le vendeur
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,6 +27,7 @@ public class DeclarationSuccess extends JFrame {
         nouvelleVente.setBounds(130, 230, 150, 30);
         nouvelleVente.setBackground(Color.GREEN);
 
+        // Si l'utilisateur clique sur cette boutton, le programme s'arrete
         JButton deconnecter = new JButton("Se déconnecter");
         deconnecter.setBounds(420, 230, 150, 30);
         deconnecter.setBackground(Color.RED);
