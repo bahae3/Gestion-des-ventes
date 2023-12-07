@@ -56,22 +56,7 @@ public class AdminChoix1 extends JFrame {
 
     private void venteJournee() throws SQLException {
         Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
-        String query = "SELECT \n" +
-                "    produits.designation AS produit_designation,\n" +
-                "    categorie.designation AS categorie_designation,\n" +
-                "    dateVente,\n" +
-                "    quantiteVendu,\n" +
-                "    utilisateurs.login\n" +
-                "FROM \n" +
-                "    ventes \n" +
-                "JOIN \n" +
-                "    produits ON ventes.produitVenduId = produits.idProduit\n" +
-                "JOIN \n" +
-                "    categorie ON produits.categorieId = categorie.idCategorie\n" +
-                "JOIN \n" +
-                "    utilisateurs ON ventes.idVendeur = utilisateurs.idUser\n" +
-                "ORDER BY \n" +
-                "    utilisateurs.idUser ASC;\n";
+        String query = "\"SELECT produits.designation AS produit_designation, categorie.designation AS categorie_designation, dateVente, quantiteVendu, utilisateurs.login FROM ventes JOIN produits ON ventes.produitVenduId = produits.idProduit JOIN categorie ON produits.categorieId = categorie.idCategorie JOIN utilisateurs ON ventes.idVendeur = utilisateurs.idUser ORDER BY utilisateurs.idUser ASC\"\n";
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet resultSet = ps.executeQuery();
         DefaultTableModel model = new DefaultTableModel();
@@ -82,8 +67,8 @@ public class AdminChoix1 extends JFrame {
         // Add columns to the table
         model.addColumn("Produit");
         model.addColumn("Catégorie");
-        model.addColumn("Date");
-        model.addColumn("Quantité");
+        model.addColumn("Date de vente");
+        model.addColumn("Quantité vendue");
         model.addColumn("Utilisateur");
         while (resultSet.next()) {
             String produitDesignation = resultSet.getString("produit_designation");

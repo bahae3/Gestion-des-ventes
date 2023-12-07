@@ -106,8 +106,24 @@ public class AdminInterface extends JFrame {
                     choix2Int.setVisible(true);
                     setVisible(false);
                 } else if (choix3.isSelected()) {
+                    AdminChoix3 choix3Int;
+//                    try {
+                        choix3Int = new AdminChoix3(id);
+//                    } catch (SQLException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+                    choix3Int.setVisible(true);
+                    setVisible(false);
 
                 } else if (choix4.isSelected()) {
+                    AdminChoix4 choix4Int;
+//                    try {
+                        choix4Int = new AdminChoix4(id);
+//                    } catch (SQLException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+                    choix4Int.setVisible(true);
+                    setVisible(false);
 
                 }
 
