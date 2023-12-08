@@ -134,7 +134,7 @@ public class AdminChoix3 extends JFrame {
                     table.setFont(new Font("Arial", Font.PLAIN, 14));
 
                     model.addColumn("Produit");
-                    model.addColumn("Categorie");
+                    model.addColumn("Catégorie");
                     model.addColumn("Date de vente");
                     model.addColumn("Quantité vendue");
                     model.addColumn("Utilisateur");

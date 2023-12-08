@@ -105,7 +105,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame loginPage = new JFrame();
         loginPage.setTitle("Info Technologies - Login");
-        loginPage.setVisible(true);
+
         loginPage.setBounds(460, 200, 710, 424);
         loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -197,5 +197,7 @@ public class Main {
             }
         });
 
+        // Here I set the frame to be visible with all elements
+        loginPage.setVisible(true);
     }
 }

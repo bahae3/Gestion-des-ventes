@@ -56,7 +56,7 @@ public class AdminChoix1 extends JFrame {
 
     private void venteJournee() throws SQLException {
         Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
-        String query = "\"SELECT produits.designation AS produit_designation, categorie.designation AS categorie_designation, dateVente, quantiteVendu, utilisateurs.login FROM ventes JOIN produits ON ventes.produitVenduId = produits.idProduit JOIN categorie ON produits.categorieId = categorie.idCategorie JOIN utilisateurs ON ventes.idVendeur = utilisateurs.idUser ORDER BY utilisateurs.idUser ASC\"\n";
+        String query = "SELECT produits.designation AS produit_designation, categorie.designation AS categorie_designation, dateVente, quantiteVendu, utilisateurs.login FROM ventes JOIN produits ON ventes.produitVenduId = produits.idProduit JOIN categorie ON produits.categorieId = categorie.idCategorie JOIN utilisateurs ON ventes.idVendeur = utilisateurs.idUser ORDER BY utilisateurs.idUser ASC";
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet resultSet = ps.executeQuery();
         DefaultTableModel model = new DefaultTableModel();
