@@ -3,10 +3,12 @@
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class AdminChoix4 extends JFrame {
     int id;
@@ -25,37 +27,36 @@ public class AdminChoix4 extends JFrame {
         this.panel.setLayout(null);
 
         JLabel bilan = new JLabel("Bilan des ventes selon la catégorie");
-        bilan.setBounds(154, 42, 385, 24);
+        bilan.setBounds(154, 42, 385, 30);
         Font logoFontConn = new Font("Times New Roman", Font.BOLD, 26);
         bilan.setFont(logoFontConn);
         bilan.setForeground(Color.BLUE);
 
         Connection conn = DriverManager.getConnection(url, usernameDB, passwordDB);
         String query2 = "SELECT designation FROM categorie";
-        StringBuilder resultat = new StringBuilder();
         PreparedStatement ps2 = conn.prepareStatement(query2);
         ResultSet resultSet2 = ps2.executeQuery();
 
+        JComboBox<String> catCombo = new JComboBox<>();
         while (resultSet2.next()) {
-            resultat.append(resultSet2.getString("designation")).append(", ");
+            String desi = resultSet2.getString("designation");
+            catCombo.addItem(desi);
         }
 
-        resultat.append("...");
 
-        JLabel resultCateg = new JLabel(String.valueOf(resultat));
+        JLabel resultCateg = new JLabel("Sélectionnez la catégorie");
         resultCateg.setBounds(100, 110, 600, 30);
-        Font logoFontCat = new Font("Calibri", Font.BOLD, 17);
+        Font logoFontCat = new Font("Calibri", Font.BOLD, 21);
         resultCateg.setFont(logoFontCat);
         resultCateg.setForeground(Color.RED);
         this.panel.add(resultCateg);
 
-        JLabel categorie = new JLabel("Saisir la catégorie: ");
-        categorie.setBounds(90, 183, 150, 30);
+        JLabel categorie = new JLabel("La catégorie: ");
+        categorie.setBounds(90, 181, 150, 30);
         categorie.setFont(new Font("Arial", Font.BOLD, 16));
         categorie.setForeground(new Color(60, 160, 240));
 
-        JTextField catTf = new JTextField();
-        catTf.setBounds(260, 183, 150, 26);
+        catCombo.setBounds(225, 183, 150, 26);
 
         JButton valider = new JButton("Générer");
         valider.setBounds(140, 268, 100, 25);
@@ -71,7 +72,7 @@ public class AdminChoix4 extends JFrame {
 
         this.panel.add(bilan);
         this.panel.add(categorie);
-        this.panel.add(catTf);
+        this.panel.add(catCombo);
         this.panel.add(valider);
         this.panel.add(menu);
 
@@ -90,7 +91,7 @@ public class AdminChoix4 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                String categorie = Character.toUpperCase(catTf.getText().charAt(0)) + catTf.getText().substring(1);
+                String categorie = (String) catCombo.getSelectedItem();
 
                 JFrame bilan = new JFrame();
                 bilan.setTitle("Bilan de vente selon la catégorie");
@@ -102,7 +103,7 @@ public class AdminChoix4 extends JFrame {
                 panelBilan.setLayout(null);
 
                 JLabel bilanTitle = new JLabel("Bilan de vente de la catégorie " + categorie);
-                bilanTitle.setBounds(150, 42, 550, 30);
+                bilanTitle.setBounds(165, 42, 540, 34);
                 Font logoFontConn = new Font("Times New Roman", Font.BOLD, 26);
                 bilanTitle.setFont(logoFontConn);
                 bilanTitle.setForeground(new Color(60, 160, 240));
@@ -117,7 +118,7 @@ public class AdminChoix4 extends JFrame {
 
                     DefaultTableModel model = new DefaultTableModel();
                     JTable table = new JTable(model);
-                    table.setRowHeight(30);
+                    table.setRowHeight(40); // Increase row height for better readability
                     table.setFont(new Font("Arial", Font.PLAIN, 14));
 
                     model.addColumn("Produit");
@@ -132,10 +133,15 @@ public class AdminChoix4 extends JFrame {
                         Date date = resultSet.getDate("dateVente");
                         int qttVendu = resultSet.getInt("quantiteVendu");
                         String user = resultSet.getString("login");
+
+                        // Format the date to display in a specific format (e.g., dd/MM/yyyy)
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String formattedDate = dateFormat.format(date);
+
                         model.addRow(new Object[]{
                                 produit,
                                 categorieDes,
-                                date,
+                                formattedDate, // Use formatted date string
                                 qttVendu,
                                 user
                         });
@@ -143,6 +149,19 @@ public class AdminChoix4 extends JFrame {
 
                     JScrollPane tableJ = new JScrollPane(table);
                     tableJ.setBounds(100, 110, 600, 200);
+
+                    table.setGridColor(Color.LIGHT_GRAY); // Set grid color
+                    table.setSelectionBackground(new Color(135, 206, 235)); // Set selection background color
+                    table.setSelectionForeground(Color.BLACK); // Set selection text color
+                    table.setShowVerticalLines(false); // Hide vertical grid lines
+
+                    // Customize table header appearance
+                    JTableHeader header = table.getTableHeader();
+                    header.setFont(new Font("Arial", Font.BOLD, 12)); // Set header font
+                    header.setBackground(Color.WHITE); // Set header background color
+                    header.setForeground(Color.BLACK); // Set header text color
+                    header.setReorderingAllowed(true); // Disable column reordering
+
                     panelBilan.add(tableJ);
 
                     resultSet.close();

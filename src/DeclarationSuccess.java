@@ -52,7 +52,8 @@ public class DeclarationSuccess extends JFrame {
         deconnecter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Close the current frame
+
+                System.exit(0);
             }
         });
     }

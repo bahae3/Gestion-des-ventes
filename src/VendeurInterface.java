@@ -25,7 +25,9 @@ public class VendeurInterface extends JFrame {
         bienvenueVenteur.setForeground(Color.red);
 
         JLabel declarationVente = new JLabel("Déclarer vos ventes réalisées durant la journée:");
-        declarationVente.setBounds(90, 110, 300, 25);
+        declarationVente.setBounds(90, 110, 500, 25);
+        declarationVente.setFont(new Font("Times New Roman", Font.BOLD, 22));
+        declarationVente.setForeground(new Color(60, 160, 240));
 
         JLabel produitVendu = new JLabel("Id du produit vendu: ");
         produitVendu.setBounds(110, 160, 150, 25);
@@ -45,8 +47,13 @@ public class VendeurInterface extends JFrame {
         JSpinner quantiteVendueTf = new JSpinner(spinnerModelQV);
         quantiteVendueTf.setBounds(255, 280, 150, 25);
 
-        JButton declarer = new JButton("Declarer");
-        declarer.setBounds(215, 350, 100, 25);
+        JButton declarer = new JButton("Déclarer");
+        declarer.setBounds(190, 350, 100, 25);
+        declarer.setBackground(Color.GREEN);
+
+        JButton quitter = new JButton("Quitter");
+        quitter.setBounds(315, 350, 100, 25);
+        quitter.setBackground(Color.RED);
 
 
         panel.add(bienvenueVenteur);
@@ -58,6 +65,7 @@ public class VendeurInterface extends JFrame {
         panel.add(quantiteVendue);
         panel.add(quantiteVendueTf);
         panel.add(declarer);
+        panel.add(quitter);
 
         this.setContentPane(panel);
 
@@ -120,6 +128,13 @@ public class VendeurInterface extends JFrame {
                     throw new RuntimeException(e);
                 }
 
+            }
+        });
+
+        quitter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 

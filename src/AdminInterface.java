@@ -55,10 +55,16 @@ public class AdminInterface extends JFrame {
         buttonGroup.add(choix4);
 
         JButton button = new JButton("Valider");
-        button.setBounds(258, 295, 100, 25);
+        button.setBounds(195, 310, 100, 25);
         button.setFont(new Font("Arial", Font.BOLD, 12));
         button.setForeground(Color.WHITE);
         button.setBackground(Color.BLUE);
+
+        JButton quitterBtn = new JButton("Quitter");
+        quitterBtn.setBounds(335, 310, 100, 25);
+        quitterBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        quitterBtn.setForeground(Color.WHITE);
+        quitterBtn.setBackground(Color.RED);
 
         JLabel logoLabel = new JLabel("IT");
         logoLabel.setBounds(485, 335, 100, 100);
@@ -79,6 +85,7 @@ public class AdminInterface extends JFrame {
         panel.add(choix3);
         panel.add(choix4);
         panel.add(button);
+        panel.add(quitterBtn);
         panel.add(logoLabel);
         panel.add(logoLabelLong);
 
@@ -123,6 +130,13 @@ public class AdminInterface extends JFrame {
                 }
 
 
+            }
+        });
+
+        quitterBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 

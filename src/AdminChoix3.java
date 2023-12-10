@@ -105,7 +105,7 @@ public class AdminChoix3 extends JFrame {
                 panelBilan.setLayout(null);
 
                 JLabel bilanTitle = new JLabel("Bilan de vente entre " + date1 + " et " + date2);
-                bilanTitle.setBounds(150, 42, 550, 30);
+                bilanTitle.setBounds(145, 42, 550, 30);
                 Font logoFontConn = new Font("Times New Roman", Font.BOLD, 26);
                 bilanTitle.setFont(logoFontConn);
                 bilanTitle.setForeground(new Color(60, 160, 240));
@@ -167,7 +167,9 @@ public class AdminChoix3 extends JFrame {
                 }
 
                 JButton retour = new JButton("Retour en avant");
-                retour.setBounds(327, 351, 145, 30);
+                retour.setBounds(310, 351, 145, 30);
+                retour.setBackground(new Color(60, 160, 240));
+
                 panelBilan.add(retour);
 
                 bilan.setContentPane(panelBilan);

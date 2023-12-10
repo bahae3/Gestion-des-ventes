@@ -3,10 +3,12 @@
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class AdminChoix1 extends JFrame {
     int id;
@@ -25,13 +27,13 @@ public class AdminChoix1 extends JFrame {
         this.panel.setLayout(null);
 
         JLabel labelVentes = new JLabel("Les ventes d'aujourd'hui");
-        labelVentes.setBounds(329, 59, 400, 30);
+        labelVentes.setBounds(300, 50, 300, 30);
         Font logoFontConn = new Font("Times New Roman", Font.BOLD, 26);
         labelVentes.setFont(logoFontConn);
         labelVentes.setForeground(new Color(60, 160, 240));
 
         JButton retourAuMenu = new JButton("Retour au menu");
-        retourAuMenu.setBounds(360, 130, 150, 30);
+        retourAuMenu.setBounds(378, 130, 144, 30);
         retourAuMenu.setBackground(new Color(60, 160, 240));
 
         // I created the Table with this function (JTable)
@@ -70,23 +72,42 @@ public class AdminChoix1 extends JFrame {
         model.addColumn("Date de vente");
         model.addColumn("Quantité vendue");
         model.addColumn("Utilisateur");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         while (resultSet.next()) {
             String produitDesignation = resultSet.getString("produit_designation");
             String categorieDesignation = resultSet.getString("categorie_designation");
             Date dateVente = resultSet.getDate("dateVente");
             int quantiteVendu = resultSet.getInt("quantiteVendu");
             String utilisateurLogin = resultSet.getString("login");
+
+            String formattedDate = dateFormat.format(dateVente);
+
             model.addRow(new Object[]{
                     produitDesignation,
                     categorieDesignation,
-                    dateVente,
+                    formattedDate,
                     quantiteVendu,
                     utilisateurLogin
             });
         }
 
         JScrollPane tableJ = new JScrollPane(table);
-        tableJ.setBounds(153, 214, 600, 400);
+        tableJ.setBounds(150, 210, 600, 387);
+
+        // Apply modern table appearance
+        table.setGridColor(new Color(200, 200, 200)); // Adjust grid color
+        table.setSelectionBackground(new Color(135, 206, 250)); // Change selection background color
+        table.setSelectionForeground(Color.WHITE); // Change selection text color
+        table.setShowVerticalLines(false); // Hide vertical grid lines
+
+        // Customize table header appearance
+        JTableHeader header = table.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 12)); // Set header font
+        header.setBackground(Color.WHITE); // Set header background color
+        header.setForeground(Color.BLACK); // Set header text color
+        header.setReorderingAllowed(false);
 
         this.panel.add(tableJ);
 
