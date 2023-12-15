@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DeclarationSuccess extends JFrame {
     int id;
@@ -42,7 +43,12 @@ public class DeclarationSuccess extends JFrame {
         nouvelleVente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VendeurInterface vendeurInt = new VendeurInterface(id);
+                VendeurInterface vendeurInt = null;
+                try {
+                    vendeurInt = new VendeurInterface(id);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 setVisible(false);
                 vendeurInt.setVisible(true);
             }

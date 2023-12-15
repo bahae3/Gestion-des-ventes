@@ -8,8 +8,11 @@ import java.text.SimpleDateFormat;
 
 public class VendeurInterface extends JFrame {
     int userId;
+    String url = "jdbc:mysql://localhost:3306/itapp";
+    String usernameDB = "root";
+    String passwordDB = "";
 
-    public VendeurInterface(int id) {
+    public VendeurInterface(int id) throws SQLException {
         this.userId = id;
         this.setTitle("Interface du vendeur");
         this.setVisible(false);
@@ -25,41 +28,54 @@ public class VendeurInterface extends JFrame {
         bienvenueVenteur.setForeground(Color.red);
 
         JLabel declarationVente = new JLabel("Déclarer vos ventes réalisées durant la journée:");
-        declarationVente.setBounds(90, 110, 500, 25);
+        declarationVente.setBounds(90, 105, 500, 25);
         declarationVente.setFont(new Font("Times New Roman", Font.BOLD, 22));
         declarationVente.setForeground(new Color(60, 160, 240));
 
-        JLabel produitVendu = new JLabel("Id du produit vendu: ");
+        JLabel produitVendu = new JLabel("Nom du produit vendu: ");
         produitVendu.setBounds(110, 160, 150, 25);
-        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(1, 1, 10, 1);
-        JSpinner produitVenduId = new JSpinner(spinnerModel);
-        produitVenduId.setBounds(255, 160, 150, 25);
+
+        Connection conn = DriverManager.getConnection(url, usernameDB, passwordDB);
+        String query = "SELECT designation FROM produits";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        JComboBox<String> produits = new JComboBox<>();
+
+        while (rs.next()) {
+            String produit = rs.getString("designation");
+            produits.addItem(produit);
+        }
+        rs.close();
+        ps.close();
+        conn.close();
+
+        produits.setBounds(255, 160, 160, 25);
 
         JLabel dateVente = new JLabel("Date de la vente: ");
         dateVente.setBounds(110, 220, 160, 25);
         PlaceholderTextField dateVenteTf = new PlaceholderTextField("yyyy-mm-dd");
-        dateVenteTf.setBounds(255, 220, 150, 25);
+        dateVenteTf.setBounds(255, 220, 160, 25);
 
 
         JLabel quantiteVendue = new JLabel("Quantité vendue: ");
         quantiteVendue.setBounds(110, 280, 150, 25);
         SpinnerNumberModel spinnerModelQV = new SpinnerNumberModel(1, 1, 250, 1);
         JSpinner quantiteVendueTf = new JSpinner(spinnerModelQV);
-        quantiteVendueTf.setBounds(255, 280, 150, 25);
+        quantiteVendueTf.setBounds(255, 280, 160, 25);
 
         JButton declarer = new JButton("Déclarer");
-        declarer.setBounds(190, 350, 100, 25);
+        declarer.setBounds(200, 360, 100, 25);
         declarer.setBackground(Color.GREEN);
 
         JButton quitter = new JButton("Quitter");
-        quitter.setBounds(315, 350, 100, 25);
+        quitter.setBounds(325, 360, 100, 25);
         quitter.setBackground(Color.RED);
 
 
         panel.add(bienvenueVenteur);
         panel.add(declarationVente);
         panel.add(produitVendu);
-        panel.add(produitVenduId);
+        panel.add(produits);
         panel.add(dateVente);
         panel.add(dateVenteTf);
         panel.add(quantiteVendue);
@@ -75,8 +91,26 @@ public class VendeurInterface extends JFrame {
                 String url = "jdbc:mysql://localhost:3306/itapp";
                 String usernameDB = "root";
                 String passwordDB = "";
+                int idProduit = 0;
 
-                int idProduit = (int) produitVenduId.getValue();
+                try {
+                    Connection conn = DriverManager.getConnection(url, usernameDB, passwordDB);
+                    String query = "SELECT idProduit FROM produits WHERE designation=?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, (String) produits.getSelectedItem());
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()){
+                        idProduit = rs.getInt("idProduit");
+                    }
+
+                    ps.close();
+                    rs.close();
+                    conn.close();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
                 String dateVente = dateVenteTf.getText();
 
                 // Converting dateVente from String to Date (java type)
