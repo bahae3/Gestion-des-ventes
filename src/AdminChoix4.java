@@ -19,7 +19,7 @@ public class AdminChoix4 extends JFrame {
 
     public AdminChoix4(int id) throws SQLException {
         this.id = id;
-        this.setTitle("Interface de l'administrateur - Choix 4");
+        this.setTitle("Interface de l'administrateur - Bilan des ventes selon la catégorie");
         this.setVisible(false);
         this.setBounds(460, 200, 710, 424);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

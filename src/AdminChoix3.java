@@ -19,7 +19,7 @@ public class AdminChoix3 extends JFrame {
 
     public AdminChoix3(int id) {
         this.id = id;
-        this.setTitle("Interface de l'administrateur - Choix 3");
+        this.setTitle("Interface de l'administrateur - Bilan des ventes entre 2 dates");
         this.setVisible(false);
         this.setBounds(460, 200, 710, 424);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
