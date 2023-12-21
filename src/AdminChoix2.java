@@ -148,7 +148,7 @@ public class AdminChoix2 extends JFrame {
                 ajoutFrame.setTitle("Ajouter un produit");
                 ajoutFrame.setVisible(true);
                 ajoutFrame.setBounds(600, 280, 450, 320);
-                ajoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                ajoutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                 JPanel ajoutPanel = new JPanel();
                 ajoutPanel.setLayout(null);

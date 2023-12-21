@@ -15,7 +15,6 @@ public class VendeurInterface extends JFrame {
     public VendeurInterface(int id) throws SQLException {
         this.userId = id;
         this.setTitle("Interface du vendeur");
-        this.setVisible(false);
         this.setBounds(460, 200, 700, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
@@ -64,11 +63,11 @@ public class VendeurInterface extends JFrame {
         quantiteVendueTf.setBounds(255, 280, 160, 25);
 
         JButton declarer = new JButton("Déclarer");
-        declarer.setBounds(200, 360, 100, 25);
+        declarer.setBounds(200, 390, 100, 25);
         declarer.setBackground(Color.GREEN);
 
         JButton quitter = new JButton("Quitter");
-        quitter.setBounds(325, 360, 100, 25);
+        quitter.setBounds(325, 390, 100, 25);
         quitter.setBackground(Color.RED);
 
 
@@ -84,6 +83,8 @@ public class VendeurInterface extends JFrame {
         panel.add(quitter);
 
         this.setContentPane(panel);
+
+        JLabel erreur1 = new JLabel("");
 
         declarer.addActionListener(new ActionListener() {
             @Override
@@ -130,36 +131,76 @@ public class VendeurInterface extends JFrame {
 
                 int qttVendue = (int) quantiteVendueTf.getValue();
 
-                Vente vente = new Vente(idProduit, sqlDate, qttVendue);
 
-                try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
-                     PreparedStatement preparedStatement = connection.prepareStatement(
-                             "INSERT INTO ventes (produitVenduId, dateVente, quantiteVendu, idVendeur) VALUES (?, ? ,?, ?)"
-                     )) {
-
-                    preparedStatement.setInt(1, vente.getProduitVenduId());
-                    preparedStatement.setDate(2, vente.getDateVente());
-                    preparedStatement.setInt(3, vente.getQuantiteVendue());
-                    preparedStatement.setInt(4, id);
-
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        System.out.println("Insert successful!");
-                        PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE produits SET quantiteStock = quantiteStock - ? WHERE idProduit = ?");
-                        preparedStatement1.setInt(1, qttVendue);
-                        preparedStatement1.setInt(2, idProduit);
-                        preparedStatement1.executeUpdate();
-                        preparedStatement1.close();
-
-                        // here i will change the frame to
-                        // if the user wants to add a new "vente" or no
-                        // if he chooses no, we will sign out and go to login page
-                        DeclarationSuccess success = new DeclarationSuccess(id);
-                        setVisible(false);
-                        success.setVisible(true);
+                int qttVendueDB = 0;
+                try {
+                    Connection connQttCheck = DriverManager.getConnection(url, usernameDB, passwordDB);
+                    String queryGetCategorie = "SELECT quantiteStock FROM produits WHERE idProduit=?";
+                    PreparedStatement ps1 = connQttCheck.prepareStatement(queryGetCategorie);
+                    ps1.setString(1, String.valueOf(idProduit));
+                    ResultSet rs1 = ps1.executeQuery();
+                    if (rs1.next()) {
+                        qttVendueDB = rs1.getInt("quantiteStock");
                     }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    rs1.close();
+                    ps1.close();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                if(qttVendueDB - qttVendue > 0){
+                    Vente vente = new Vente(idProduit, sqlDate, qttVendue);
+
+                    try (Connection connection = DriverManager.getConnection(url, usernameDB, passwordDB);
+                         PreparedStatement preparedStatement = connection.prepareStatement(
+                                 "INSERT INTO ventes (produitVenduId, dateVente, quantiteVendu, idVendeur) VALUES (?, ? ,?, ?)"
+                         )) {
+
+                        preparedStatement.setInt(1, vente.getProduitVenduId());
+                        preparedStatement.setDate(2, vente.getDateVente());
+                        preparedStatement.setInt(3, vente.getQuantiteVendue());
+                        preparedStatement.setInt(4, id);
+
+                        int rowsAffected = preparedStatement.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Insert successful!");
+                            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE produits SET quantiteStock = quantiteStock - ? WHERE idProduit = ?");
+                            preparedStatement1.setInt(1, qttVendue);
+                            preparedStatement1.setInt(2, idProduit);
+                            preparedStatement1.executeUpdate();
+                            preparedStatement1.close();
+
+                            // here i will change the frame to
+                            // if the user wants to add a new "vente" or no
+                            // if he chooses no, we will sign out and go to login page
+                            DeclarationSuccess success = new DeclarationSuccess(id);
+                            setVisible(false);
+                            success.setVisible(true);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else{
+
+                    if(qttVendueDB == 0){
+                        erreur1.setText("Le stock de ce produits est en rupture!");
+                    }
+                    else{
+                        erreur1.setText("La quantité restante de ce produit est inférieure a celle que vous vendez!");
+                    }
+                    erreur1.setBounds(120, 330, 440, 25);
+                    erreur1.setForeground(Color.RED);
+
+                    // Remove the previous label
+                    panel.remove(erreur1);
+
+                    // Add the updated label to the panel
+                    panel.add(erreur1);
+
+                    // Repaint the panel to reflect changes
+                    panel.revalidate();
+                    panel.repaint();
                 }
 
             }
@@ -171,6 +212,8 @@ public class VendeurInterface extends JFrame {
                 System.exit(0);
             }
         });
+
+        this.setVisible(false);
 
     }
 }
