@@ -2,6 +2,9 @@
   <artifact type="jar" name="ProjectJavaUir:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ProjectJavaUir_jar</output-path>
     <root id="archive" name="ProjectJavaUir.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/../META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="ProjectJavaUir" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/mysql-connector-java-8.0.29.jar" path-in-jar="/" />
     </root>
