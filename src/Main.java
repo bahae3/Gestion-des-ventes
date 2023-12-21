@@ -104,7 +104,7 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame loginPage = new JFrame();
-        loginPage.setTitle("Info Technologies - Login");
+        loginPage.setTitle("Info Technologies - Interface d'authentification");
 
         loginPage.setBounds(460, 200, 710, 424);
         loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -19,14 +19,14 @@ public class AdminChoix1 extends JFrame {
 
     public AdminChoix1(int id) throws SQLException {
         this.id = id;
-        this.setTitle("Interface de l'administrateur - Choix 1");
+        this.setTitle("Interface de l'administrateur - Les ventes réalisées");
         this.setVisible(false);
         this.setBounds(390, 70, 900, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.panel.setLayout(null);
 
-        JLabel labelVentes = new JLabel("Les ventes d'aujourd'hui");
+        JLabel labelVentes = new JLabel("Les ventes réalisées");
         labelVentes.setBounds(300, 50, 300, 30);
         Font logoFontConn = new Font("Times New Roman", Font.BOLD, 26);
         labelVentes.setFont(logoFontConn);

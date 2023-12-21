@@ -28,12 +28,12 @@ public class AdminInterface extends JFrame {
         gestion.setFont(new Font("Arial", Font.BOLD, 16));
         gestion.setForeground(Color.BLUE);
 
-        JRadioButton choix1 = new JRadioButton("Consulter les ventes réalisées dans la journée.");
+        JRadioButton choix1 = new JRadioButton("Consulter les ventes réalisées dans les journées.");
         choix1.setBounds(180, 160, 400, 25);
         choix1.setFont(new Font("Arial", Font.PLAIN, 14));
         choix1.setForeground(Color.BLACK);
 
-        JRadioButton choix2 = new JRadioButton("Gérer Produit et Catégorie.");
+        JRadioButton choix2 = new JRadioButton("Gérer les produits.");
         choix2.setBounds(180, 190, 250, 25);
         choix2.setFont(new Font("Arial", Font.PLAIN, 14));
         choix2.setForeground(Color.BLACK);

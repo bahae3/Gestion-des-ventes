@@ -19,7 +19,7 @@ public class AdminChoix2 extends JFrame {
 
     public AdminChoix2(int id) throws SQLException {
         this.id = id;
-        this.setTitle("Interface de l'administrateur - Choix 2");
+        this.setTitle("Interface de l'administrateur - Ajouter/Supprimer un produit");
         this.setVisible(false);
         this.setBounds(390, 70, 900, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
