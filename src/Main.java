@@ -112,7 +112,7 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        JLabel seConnecter = new JLabel("Veuillez se connecter");
+        JLabel seConnecter = new JLabel("Veuillez vous connecter");
         seConnecter.setBounds(204, 50, 250, 25);
         Font logoFontConn = new Font("Times New Roman", Font.BOLD, 28);
         seConnecter.setFont(logoFontConn);
